@@ -32,7 +32,7 @@ RSpec.describe RestaurantsShift, type: :model do
         expect(restaurants_shift.valid?).to eq false
       end
 
-      it 'create when restaurant shift ant overlaps' do
+      it 'create when restaurant shift not overlaps' do
         create(:restaurants_shift, restaurant: restaurant)
         restaurants_shift = build(:restaurants_shift, start_time: Time.now + 3.hour,
                                                       end_time: Time.now + 4.hour,

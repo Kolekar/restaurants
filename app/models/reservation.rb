@@ -9,8 +9,8 @@ class Reservation < ApplicationRecord
   validates :guest, :restaurants_table, :reservation_time, presence: true
   validates :guest_count, presence: true, numericality: { only_integer: true }
 
-  before_create :reservation_mail
-  before_update :reservation_update_mail
+  after_create :reservation_mail
+  after_update :reservation_update_mail
 
   def validate_guest_count
     return if restaurants_table.nil? || restaurants_table.try(:minimum).nil? ||
@@ -37,7 +37,13 @@ class Reservation < ApplicationRecord
     errors.add(:reservation_time, 'reservation_time must be future')
   end
 
-  def reservation_mail; end
+  def reservation_mail
+    ReservationMailer.guest_reservation_create(id).deliver_later
+    ReservationMailer.restaurant_reservation_create(id).deliver_later
+  end
 
-  def reservation_update_mail; end
+  def reservation_update_mail
+    ReservationMailer.guest_reservation_create(self.changes, id).deliver_later
+    ReservationMailer.restaurant_reservation_create(self.changes, id).deliver_later
+  end
 end

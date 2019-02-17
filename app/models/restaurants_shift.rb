@@ -19,7 +19,7 @@ class RestaurantsShift < ApplicationRecord
                      }
 
   def validate_end_time
-    errors.add(:end_time, 'should be greater than starts at') if end_time? && start_time? && end_time <= start_time
+    errors.add(:end_time, 'should be greater than start time') if end_time? && start_time? && end_time <= start_time
   end
 
   def validate_shift_overlaping
