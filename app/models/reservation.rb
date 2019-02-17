@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class Reservation < ApplicationRecord
   belongs_to :guest, inverse_of: :reservations
-  belongs_to :restaurants_table # , inverse_of: :reservations
+  belongs_to :restaurants_table, inverse_of: :reservations
   has_one :restaurant, through: :restaurants_table
   delegate :restaurants_shifts, to: :restaurant, allow_nil: true
 

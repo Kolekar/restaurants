@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'grape-swagger'
 module Api
   class V1::Base < Grape::API
     prefix 'api'
@@ -7,23 +8,16 @@ module Api
     default_format :json
     version 'v1', using: :path
 
-    include V4::Extensions::Grape # must be first
-
-    before do
-      header 'X-Api-Version', '4.2.6'
-      header 'P3P', "CP='This is no policy'"
-      # Enable once this version is retired:
-      # header 'X-Api-Expires-On', '2014-10-26T00:00:00Z'
-    end
-
-    include V4::Endpoints::Partner::Reservations
-    mount V4::Endpoints::CreditCards
+    include V1::Endpoints::Reservations
+    include V1::Endpoints::Guests
+    include V1::Endpoints::Restaurants
+    include V1::Endpoints::RestaurantsShifts
+    include V1::Endpoints::RestaurantsTables
 
     add_swagger_documentation(
       hide_format: true,
       api_version: version,
-      hide_documentation_path: true,
-      markdown: GrapeSwagger::Markdown::KramdownAdapter.new
+      hide_documentation_path: true
     )
   end
 end

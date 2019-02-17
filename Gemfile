@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 gem 'grape'
 gem 'grape-entity'
+gem 'grape-swagger'
 gem 'pg'
 
 group :development, :test do
