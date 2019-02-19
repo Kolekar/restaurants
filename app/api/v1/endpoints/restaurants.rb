@@ -14,7 +14,7 @@ module Api
           requires :id, type: String, desc: 'Restaurant ID'
         end
         get ':id', entity: V1::Entities::Restaurant do
-          restaurant = Restaurant.find_by(id: params[:id]).includes(:reservations)
+          restaurant = Restaurant.find_by(id: params[:id])
           our_error!(404) if restaurant.nil?
           present restaurant, with: V1::Entities::Restaurant
         end
@@ -23,7 +23,7 @@ module Api
         }
 
         get '', entity: V1::Entities::Restaurant do
-          restaurants = Restaurant.all
+          restaurants = Restaurant.all.includes(restaurants_tables: :reservations)
           present restaurants, with: V1::Entities::Restaurant
         end
 
@@ -36,7 +36,7 @@ module Api
         end
         post '', entity: V1::Entities::Restaurant do
           restaurant = Restaurant.new
-          restaurant.name = Time.parse(params[:name])
+          restaurant.name = params[:name]
           restaurant.email = params[:email]
           restaurant.phone = params[:phone]
           if restaurant.save
@@ -54,9 +54,10 @@ module Api
           requires :phone, type: String, desc: 'Restaurant phone'
           requires :email, type: String, desc: 'Restaurant email'
         end
-        put '', entity: V1::Entities::Restaurant do
+        put ':id', entity: V1::Entities::Restaurant do
           restaurant = Restaurant.find_by(id: params[:id])
           our_error!(404) if restaurant.nil?
+          restaurant.email = params[:email]
           restaurant.name = params[:name]
           restaurant.phone = params[:phone]
 

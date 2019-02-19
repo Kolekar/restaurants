@@ -57,7 +57,7 @@ module Api
           requires :name, type: String, desc: 'RestaurantsTable name'
           requires :email, type: String, desc: 'RestaurantsTable email'
         end
-        put '', entity: V1::Entities::RestaurantsTable do
+        put ':id', entity: V1::Entities::RestaurantsTable do
           restaurants_table = RestaurantsTable.find_by(id: params[:id])
           our_error!(404) if restaurants_table.nil?
           restaurant = Restaurant.find_by(id: params[:id])

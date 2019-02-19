@@ -1,6 +1,5 @@
 Hi <%= @guest.name %>, <br>
 Your Reservation has been Updated successfully<br>
-
-@changes.each do|k,v|
-<%= k %>: <%= v %><br>
-end
+<% @changes.each do|k,v| %>
+  <%= k %>: <%= v %><br>
+<% end %>

@@ -54,7 +54,7 @@ module Api
           requires :start_time, type: String, desc: 'RestaurantsShift start_time'
           requires :end_time, type: String, desc: 'RestaurantsShift end_time'
         end
-        put '', entity: V1::Entities::RestaurantsShift do
+        put ':id', entity: V1::Entities::RestaurantsShift do
           restaurants_shift = RestaurantsShift.find_by(id: params[:id])
           our_error!(404) if restaurants_shift.nil?
           restaurants_shift.title = params[:title]

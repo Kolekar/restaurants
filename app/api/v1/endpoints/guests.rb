@@ -51,7 +51,7 @@ module Api
           requires :name, type: String, desc: 'Guest name'
           requires :email, type: String, desc: 'Guest email'
         end
-        put '', entity: V1::Entities::Guest do
+        put ':id', entity: V1::Entities::Guest do
           guest = Guest.find_by(id: params[:id])
           our_error!(404) if guest.nil?
           guest.name = params[:name]

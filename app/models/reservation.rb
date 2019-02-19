@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Reservation < ApplicationRecord
   belongs_to :guest, inverse_of: :reservations
   belongs_to :restaurants_table, inverse_of: :reservations
@@ -43,7 +45,7 @@ class Reservation < ApplicationRecord
   end
 
   def reservation_update_mail
-    ReservationMailer.guest_reservation_create(self.changes, id).deliver_later
-    ReservationMailer.restaurant_reservation_create(self.changes, id).deliver_later
+    ReservationMailer.guest_reservation_update(changes.to_json, id).deliver_later
+    ReservationMailer.restaurant_reservation_update(changes.to_json, id).deliver_later
   end
 end

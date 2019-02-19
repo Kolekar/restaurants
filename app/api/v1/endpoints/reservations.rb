@@ -57,7 +57,7 @@ module Api
           requires :restaurants_table_id, type: String, desc: 'Reservation restaurants_table_id'
           requires :guest_id, type: String, desc: 'Reservation guest_id'
         end
-        put '', entity: V1::Entities::Reservation do
+        put ':id', entity: V1::Entities::Reservation do
           reservation = Reservation.find_by(id: params[:id])
           our_error!(404) if reservation.nil?
           reservation.reservation_time = Time.parse(params[:reservation_time])

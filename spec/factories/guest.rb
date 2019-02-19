@@ -3,6 +3,6 @@
 FactoryGirl.define do
   factory :guest do
     name 'MyString'
-    email 'test@test.com'
+    sequence(:email) { |n| "test#{n}@test.com" }
   end
 end
